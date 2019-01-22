@@ -1,0 +1,15 @@
+{
+	"description": "SDL building blocks for D",
+	"dependencies": {
+		"derelict-sdl2": "~>2.1.4",
+        "blerp": "*"
+	},
+    "targetType": "library",
+    "targetPath": "lib",
+	"authors": [
+		"Samathy"
+	],
+	"copyright": "Copyright © 2019, Samathy",
+	"license": "MIT",
+	"name": "primordial"
+}
