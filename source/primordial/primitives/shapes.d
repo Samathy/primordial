@@ -1,4 +1,4 @@
-module primordial.primitives;
+module primordial.primitives.shapes;
 
 import std.random, std.string, std.stdio;
 import std.conv : to;
