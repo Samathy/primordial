@@ -11,5 +11,13 @@
 	],
 	"copyright": "Copyright © 2019, Samathy",
 	"license": "MIT",
-	"name": "primordial"
+	"name": "primordial",
+    "configurations": [
+        {
+            "name": "example",
+            "targetName": "primordial-example",
+            "targetType": "executable",
+            "targetPath": "."
+        }
+    ],
 }
