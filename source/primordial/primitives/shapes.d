@@ -142,8 +142,8 @@ class rectangle : renderable_abstract_object
             this.rect.h = this.height;
             this.rect.w = this.width;
 
-            if ((sdl_context.SetRenderDrawColor(this.renderer, this.col.r, this.col.b,
-                    this.col.g, this.col.a)) < 0)
+            if ((sdl_context.SetRenderDrawColor(this.renderer, this.col.r,
+                    this.col.b, this.col.g, this.col.a)) < 0)
             {
                 throw new SDLException("Could not set render colour: ", to!string(SDL_GetError()));
             }
@@ -265,7 +265,8 @@ class line : renderable_abstract_object
 
         override void render()
         {
-            sdl_context.SetRenderDrawColor(this.renderer, this.col.r, this.col.g, this.col.b, this.col.a);
+            sdl_context.SetRenderDrawColor(this.renderer, this.col.r,
+                    this.col.g, this.col.b, this.col.a);
             sdl_context.RenderDrawLine(this.renderer, this.x, this.y, this.x2, this.y2);
         }
     }
@@ -274,6 +275,110 @@ class line : renderable_abstract_object
     {
         int x2;
         int y2;
+    }
+
+}
+
+class solid_circle : renderable_abstract_object
+{
+    public
+    {
+        this(int x, int y, int radius, color col, SDL_Renderer* renderer)
+        {
+
+            super(x, y, 0, 0, col, renderer);
+
+            this.radius = radius;
+
+        }
+
+        override void render()
+        {
+            sdl_context.SetRenderDrawColor(this.renderer, this.col.r,
+                    this.col.g, this.col.b, this.col.a);
+
+            for (int w; w < this.radius * 2; w++)
+            {
+                for (int h; h < this.radius * 2; h++)
+                {
+                    int dx = this.radius - w;
+                    int dy = this.radius - h;
+
+                    if ((dx * dx + dy * dy) <= (this.radius * this.radius))
+                    {
+                        sdl_context.RenderDrawPoint(this.renderer, this.x + dx, this.y + dy);
+                    }
+                }
+            }
+        }
+
+    }
+
+    private
+    {
+        int radius;
+    }
+
+}
+
+class line_circle : renderable_abstract_object
+{
+    public
+    {
+        this(int x, int y, int radius, color col, SDL_Renderer* renderer)
+        {
+
+            super(x, y, 0, 0, col, renderer);
+
+            this.radius = radius;
+
+        }
+
+        override void render()
+        {
+            sdl_context.SetRenderDrawColor(this.renderer, this.col.r,
+                    this.col.g, this.col.b, this.col.a);
+
+            int xx = this.radius - 1;
+            int yy = 0;
+            int dx = 1;
+            int dy = 1;
+            int diameter = radius * 2;
+            int err = dx - diameter;
+
+            while (xx >= yy)
+            {
+                sdl_context.RenderDrawPoint(this.renderer, this.x + xx, this.y + yy);
+                sdl_context.RenderDrawPoint(this.renderer, this.x + yy, this.y + xx);
+                sdl_context.RenderDrawPoint(this.renderer, this.x - yy, this.y + xx);
+                sdl_context.RenderDrawPoint(this.renderer, this.x - xx, this.y + yy);
+
+                sdl_context.RenderDrawPoint(this.renderer, this.x - xx, this.y - yy);
+                sdl_context.RenderDrawPoint(this.renderer, this.x - yy, this.y - xx);
+                sdl_context.RenderDrawPoint(this.renderer, this.x + yy, this.y - xx);
+                sdl_context.RenderDrawPoint(this.renderer, this.x + xx, this.y - yy);
+
+                if (err <= 0)
+                {
+                    yy++;
+                    err += dy;
+                    dy += 2;
+                }
+
+                if (err > 0)
+                {
+                    xx--;
+                    dx += 2;
+                    err += dx - (diameter);
+                }
+            }
+        }
+
+    }
+
+    private
+    {
+        int radius;
     }
 
 }
