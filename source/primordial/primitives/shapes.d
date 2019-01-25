@@ -225,6 +225,36 @@ unittest
     rect.render();
 }
 
+class line_rectangle : rectangle
+{
+
+    public
+    {
+        this(int x, int y, int width, int height, color col, SDL_Renderer* renderer)
+        {
+            super(x, y, width, height, col, renderer);
+        }
+
+        override void render()
+        {
+            this.rect.x = this.x;
+            this.rect.y = this.y;
+            this.rect.h = this.height;
+            this.rect.w = this.width;
+
+            if ((sdl_context.SetRenderDrawColor(this.renderer, this.col.r,
+                    this.col.b, this.col.g, this.col.a)) < 0)
+            {
+                throw new SDLException("Could not set render colour: ", to!string(SDL_GetError()));
+            }
+            if ((sdl_context.RenderDrawRect(renderer, &this.rect)) < 0)
+            {
+                throw new SDLException("Could not set render colour: ", to!string(SDL_GetError()));
+            }
+        }
+    }
+}
+
 class line : renderable_abstract_object
 {
 

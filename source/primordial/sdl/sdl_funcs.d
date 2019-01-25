@@ -135,9 +135,14 @@ class SDL
             return SDL_SetRenderDrawColor(ren, r, g, b, a);
         }
 
-        int RenderDrawPoint( SDL_Renderer* ren, int x, int y)
+        int RenderDrawPoint(SDL_Renderer* ren, int x, int y)
         {
             return SDL_RenderDrawPoint(ren, x, y);
+        }
+
+        int RenderDrawRect(SDL_Renderer* ren, SDL_Rect* rect)
+        {
+            return SDL_RenderDrawRect(ren, rect);
         }
 
         int SetRenderFillRect(SDL_Renderer* ren, SDL_Rect* rect)
