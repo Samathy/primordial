@@ -73,6 +73,26 @@ class renderable_abstract_object : renderable_object
             }
         }
 
+        void setx(int x)
+        {
+            this.x = x;
+        }
+
+        void sety(int y)
+        {
+            this.y = y;
+        }
+
+        int getx()
+        {
+            return this.x;
+        }
+
+        int gety()
+        {
+            return this.y;
+        }
+
         void render()
         {
         }
@@ -163,6 +183,18 @@ class rectangle : renderable_abstract_object
         {
             update_rect();
             return immutable(int)(this.width);
+        }
+
+        override public void setx(int x)
+        {
+            this.x = x;
+            this.rect.x = x;
+        }
+
+        override public void sety(int y)
+        {
+            this.y = y;
+            this.rect.y = y;
         }
     }
 
@@ -324,6 +356,7 @@ class solid_circle : renderable_abstract_object
 
         override void render()
         {
+
             sdl_context.SetRenderDrawColor(this.renderer, this.col.r,
                     this.col.g, this.col.b, this.col.a);
 
@@ -590,7 +623,6 @@ class text : renderable_abstract_object
 @("Test text class")
 unittest
 {
-
 
     sdl_window main_window;
     try
@@ -989,4 +1021,3 @@ class scale
         SDL_Renderer* renderer;
     }
 }
-
