@@ -18,6 +18,10 @@
             "targetName": "primordial-example",
             "targetType": "executable",
             "targetPath": "."
+        },
+        {
+            "name":"unittest",
+            "excludedSourceFiles": ["source/example.d"]
         }
     ],
 }
