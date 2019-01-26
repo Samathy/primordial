@@ -7,9 +7,11 @@ import std.random: Random, uniform, unpredictableSeed;
 alias color = SDL_Color;
 
 static immutable color red = {255, 0, 0, 255};
-static immutable color blue = {0, 255, 0, 255};
-static immutable color green = {0, 0, 255, 255};
+static immutable color green = {0, 255, 0, 255};
+static immutable color blue = {0, 0, 255, 255};
 static immutable color black = {0, 0, 0, 255};
+static immutable color white = {255, 255, 255, 255};
+
 
 static color get_random_color()
 {
