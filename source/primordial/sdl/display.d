@@ -1,12 +1,14 @@
 module primordial.sdl.display;
 
 import std.string;
-import std.conv: to;
+import std.conv : to;
 
 import derelict.sdl2.sdl, derelict.sdl2.ttf;
 
-import primordial.init: sdl_context;
+import primordial.init : sdl_context;
 import primordial.sdl.sdl_funcs;
+import primordial.input.keyboard;
+import primordial.colors : color;
 
 struct screen_dimensions
 {
@@ -59,6 +61,12 @@ class sdl_window
         void clear()
         {
             sdl_context.SetRenderDrawColor(this.renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+            sdl_context.RenderClear(this.renderer);
+        }
+
+        void clear(color col)
+        {
+            sdl_context.SetRenderDrawColor(this.renderer, col.r, col.g, col.b, col.a);
             sdl_context.RenderClear(this.renderer);
         }
 
