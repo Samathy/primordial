@@ -51,6 +51,16 @@ class model_container
         this.y = y;
     }
 
+    int getx()
+    {
+        return this.x;
+    }
+
+    int gety()
+    {
+        return this.y;
+    }
+
     int getz()
     {
         return this.z;
