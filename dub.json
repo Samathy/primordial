@@ -22,6 +22,12 @@
         {
             "name":"unittest",
             "excludedSourceFiles": ["source/example.d"]
+        },
+        {
+            "name":"interactive",
+            "versions":["interactive"] ,
+            "buildOptions":["unittests", "debugMode", "debugInfo"],
+            "excludedSourceFiles": ["source/example.d"]
         }
     ],
 }

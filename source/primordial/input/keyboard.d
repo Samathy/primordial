@@ -84,26 +84,29 @@ class sdl_event_listener
 
 }
 
-unittest
+version(interactive)
 {
-    //TODO Update dub.json with a rule to exclude this
-    // if we're not doing integration tests
-    int quit = 0;
-    sdl_event_listener listner = new sdl_event_listener();
-
-    sdl_window main_window = new sdl_window("example");
-
-    listner.listen();
-
-    while (listner.getLastKey() != SDLK_q)
+    unittest
     {
-        if (quit >= 100000000)
+        //TODO Update dub.json with a rule to exclude this
+        // if we're not doing integration tests
+        int quit = 0;
+        sdl_window main_window = new sdl_window("example");
+        sdl_event_listener listner = new sdl_event_listener(main_window);
+
+
+        listner.listen();
+
+        while (listner.getLastKey() != SDLK_q)
         {
-            assert(false);
+            if (quit >= 100000000)
+            {
+                assert(false);
+            }
         }
+
+        listner.sendShutdown();
+
+        assert(true);
     }
-
-    listner.sendShutdown();
-
-    assert(true);
 }
