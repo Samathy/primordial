@@ -39,6 +39,12 @@ class sdl_event_listener
         }
     }
 
+    public void clearEvents()
+    {
+        this.last = 0;
+        this.newEvent = false;
+    }
+
     ///Starts a task to listen for key presses
     void listen()
     {
