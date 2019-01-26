@@ -4,7 +4,7 @@ import std.stdio;
 
 import primordial.sdl.sdl_funcs;
 
-import blerp.blerp;
+version (unittest) import blerp.blerp;
 
 public SDL sdl_context = null;
 public TTF ttf_context = null;
