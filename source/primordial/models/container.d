@@ -2,6 +2,7 @@ module primordial.models.container;
 
 import primordial.primitives.shapes;
 import primordial.models.component;
+import primordial.sdl.display;
 
 /**Model  containers contain a bunch of renderable objects.
   Each object should have it's x and y set to 0, and give the model container a function to change it's x & y in relation to the model's x & y.
@@ -38,6 +39,16 @@ class model_container
             component.updatePosition(this.x, this.y);
             component.render();
         }
+    }
+
+    void setx(int x)
+    {
+        this.x = x;
+    }
+
+    void sety(int y)
+    {
+        this.y = y;
     }
 
     int getz()
@@ -120,6 +131,20 @@ version (interactive)
 
         assert(r.getx() == (30 - (30 / 2)));
         assert(r.gety() == 30);
+
+        model.setx(0);
+        model.sety(0);
+
+        model.render();
+        main_window.update();
+
+        main_window.clear();
+
+        assert(l.getx() == 0);
+        assert(l.gety() == 0);
+
+        assert(r.getx() == 0);
+        assert(r.gety() == 0);
 
         Thread.sleep(dur!("seconds")(4));
 
