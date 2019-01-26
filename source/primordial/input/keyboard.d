@@ -24,8 +24,19 @@ class sdl_event_listener
 
     SDL_Keycode getLastKey()
     {
-        this.last = receiveOnly!(SDL_Keycode);
-        return this.last;
+        receiveTimeout(msecs(0), (SDL_Keycode keycode) {
+            this.last = keycode;
+            this.newEvent = true;
+        });
+
+        if (this.newEvent)
+        {
+            return this.last;
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     ///Starts a task to listen for key presses
@@ -54,7 +65,7 @@ class sdl_event_listener
     {
         shared SDL_Keycode last;
 
-        shared bool shutdown = false;
+        bool newEvent = false;
 
         Tid listenerTid;
 
@@ -84,7 +95,7 @@ class sdl_event_listener
 
 }
 
-version(interactive)
+version (interactive)
 {
     unittest
     {
@@ -93,7 +104,6 @@ version(interactive)
         int quit = 0;
         sdl_window main_window = new sdl_window("example");
         sdl_event_listener listner = new sdl_event_listener(main_window);
-
 
         listner.listen();
 
