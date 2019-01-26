@@ -292,13 +292,16 @@ class line : renderable_abstract_object
 
     public
     {
-        this(int x, int y, int x2, int y2, color col, SDL_Renderer* renderer)
+        this(int x, int y, int x_mod, int y_mod, color col, SDL_Renderer* renderer)
         {
 
             super(x, y, 0, 0, col, renderer);
 
-            this.x2 = x2;
-            this.y2 = y2;
+            this.x2 = x + x_mod;
+            this.y2 = y + y_mod;
+
+            this.x_mod = x_mod;
+            this.y_mod = y_mod;
 
         }
 
@@ -331,14 +334,45 @@ class line : renderable_abstract_object
                     this.col.g, this.col.b, this.col.a);
             sdl_context.RenderDrawLine(this.renderer, this.x, this.y, this.x2, this.y2);
         }
+
+        public override void setx(int x)
+        {
+            this.x = x;
+            this.x2 = this.x + this.x_mod;
+        }
+
+        public override void sety(int y)
+        {
+            this.y = y;
+            this.y2 = this.y + this.y_mod;
+        }
+
     }
 
     private
     {
         int x2;
         int y2;
+        int x_mod;
+        int y_mod;
     }
 
+}
+
+unittest
+{
+    import primordial.colors : red;
+
+    line l = new line(0, 0, 10, 10, red, null);
+
+    assert(l.x2 == 10);
+    assert(l.y2 == 10);
+
+    l.setx(10);
+    assert(l.x2 == 20);
+
+    l.sety(10);
+    assert(l.y2 == 20);
 }
 
 class solid_circle : renderable_abstract_object
