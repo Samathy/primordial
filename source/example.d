@@ -21,6 +21,10 @@ int main()
 
     line_circle c = new line_circle(50, 50, 20, red, window.get_renderer());
 
+    line_triangle t = new line_triangle(100, 100, 10, 100, red, window.get_renderer());
+
+    t.render();
+
     r.render();
 
     line_r.render();

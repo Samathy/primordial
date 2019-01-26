@@ -140,6 +140,11 @@ class SDL
             return SDL_RenderDrawPoint(ren, x, y);
         }
 
+        int RenderDrawLines(SDL_Renderer* ren, SDL_Point[] points, ubyte pointcount)
+        {
+            return SDL_RenderDrawLines(ren, points.ptr, pointcount);
+        }
+
         int RenderDrawRect(SDL_Renderer* ren, SDL_Rect* rect)
         {
             return SDL_RenderDrawRect(ren, rect);

@@ -413,6 +413,94 @@ class line_circle : renderable_abstract_object
 
 }
 
+class line_triangle : renderable_abstract_object
+{
+
+    public
+    {
+        this(int x, int y, int base_width, int height, color col, SDL_Renderer* renderer)
+        {
+            super(x, y, base_width, height, col, renderer);
+
+            this.base_width = base_width;
+            this.height = height;
+
+        }
+
+        override void render()
+        {
+            //These values are all wrong, we also probably need to draw top->left->right?
+            SDL_Point top = {this.x, this.y - (this.height / 2)};
+            SDL_Point left = {
+                this.x - (this.base_width / 2), this.y + (this.height / 2)
+            };
+            SDL_Point right = {
+                this.x + (this.base_width / 2), this.y + (this.height / 2)
+            };
+
+            this.points[0] = top;
+            this.points[1] = left;
+            this.points[2] = right;
+            this.points[3] = top;
+
+            sdl_context.SetRenderDrawColor(this.renderer, this.col.r,
+                    this.col.g, this.col.b, this.col.a);
+
+            sdl_context.RenderDrawLines(this.renderer, points, cast(ubyte) 4);
+
+        }
+
+    }
+
+    private
+    {
+        int base_width;
+        int height;
+
+        SDL_Point[4] points;
+    }
+}
+
+unittest
+{
+    primordial.sdl.display.sdl_window main_window;
+    try
+    {
+        main_window = new primordial.sdl.display.sdl_window("flatmap", 640, 480);
+    }
+    catch (SDLException e)
+    {
+        writeln("Setting up an SDL window failed with: " ~ e.GetError());
+        assert(false);
+    }
+    catch (Exception e)
+    {
+        writeln(e.msg);
+        assert(false);
+    }
+
+    color red = {255, 0, 0, 255};
+
+    line_triangle tri = new line_triangle(0, 0, 10, 10, red, main_window.get_renderer());
+
+    assert(tri.x == 0);
+    assert(tri.y == 0);
+
+    assert(tri.base_width == 10);
+    assert(tri.height == 10);
+
+    tri.render();
+
+    assert(tri.points[0].x == 0);
+    assert(tri.points[0].y == -5);
+    assert(tri.points[1].x == -5);
+    assert(tri.points[1].y == +5);
+    assert(tri.points[2].x == +5);
+    assert(tri.points[2].y == +5);
+    assert(tri.points[3] == tri.points[0]);
+
+}
+
 class text : renderable_abstract_object
 {
     public
