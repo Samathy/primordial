@@ -40,6 +40,16 @@ class model_container
         }
     }
 
+    int getz()
+    {
+        return this.z;
+    }
+
+    string getname()
+    {
+        return this.name;
+    }
+
     private
     {
         int x;
