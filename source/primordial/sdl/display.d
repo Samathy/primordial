@@ -118,9 +118,9 @@ class sdl_window
 
         }
 
-        void create_renderer()
+        void create_renderer(SDL_RendererFlags flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
         {
-            this.renderer = sdl_context.CreateRenderer(this.window, -1, SDL_RENDERER_SOFTWARE);
+            this.renderer = sdl_context.CreateRenderer(this.window, -1, flags);
         }
 
         string title;
