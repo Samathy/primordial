@@ -586,7 +586,7 @@ class text : renderable_abstract_object
 
             this.font = ttf_context.OpenFont("/usr/share/fonts/TTF/FreeMonoBold.ttf", this.font_size);
 
-            load_rendered_text(text_content);
+            load_rendered_text(text_content, this.col);
         }
 
         ~this()
