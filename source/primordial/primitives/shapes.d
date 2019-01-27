@@ -597,7 +597,8 @@ class text : renderable_abstract_object
 
         void load_rendered_text(string text, color text_color = black)
         {
-            this.text_surface = ttf_context.RenderText_Solid(this.font, toStringz(text), text_color);
+            this.text_surface = ttf_context.RenderText_Blended(this.font,
+                    toStringz(text), text_color);
 
             this.texture = sdl_context.CreateTextureFromSurface(this.renderer, this.text_surface);
 

@@ -247,6 +247,17 @@ class TTF
             return new_surface;
         }
 
+        SDL_Surface* RenderText_Blended(TTF_Font* font, immutable(char)* text, SDL_Color color)
+        {
+            SDL_Surface* new_surface = null;
+            if ((new_surface = TTF_RenderText_Blended(font, text, color)) == null)
+            {
+                throw new SDLException("Could not create text surface", to!string(TTF_GetError()));
+            }
+
+            return new_surface;
+        }
+
         TTF_Font* OpenFont(immutable(char)* file, int size)
         {
             TTF_Font* font;
