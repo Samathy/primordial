@@ -10,12 +10,18 @@ import primordial.sdl.sdl_funcs;
 import primordial.input.keyboard;
 import primordial.colors : color;
 
+/*
+   Represents screen dimensions
+*/
 struct screen_dimensions
 {
     int w = 640;
     int h = 480;
 };
 
+/**
+  Represents an SDL window including drawable SDL renderer.
+*/
 class sdl_window
 {
 
@@ -25,6 +31,18 @@ class sdl_window
         {
             this("");
         }
+        /* 
+           Constructor.
+
+            Params:
+                string title    The title of the window
+                int x = SDL_WINDOWPOS_UNDEFINED    The x location of the window
+                int y = SDL_WINDOWPOS_UNDEFINED    The y location of the window
+                immutable(int) width    The width of the window
+                immutable(int) height   The height of the window
+                immutable(bool) init = true    Ignored
+                immutable(bool) hasSurface = false    Create an SDL surface? (currently ignored and useless)
+        */
 
         this(string title, int x = SDL_WINDOWPOS_UNDEFINED, int y = SDL_WINDOWPOS_UNDEFINED,
                 immutable(int) width = 640, immutable(int) height = 480,
@@ -53,29 +71,46 @@ class sdl_window
             sdl_context.DestroyWindow(this.window);
         }
 
+        /**
+          Update this window, rendering to screen everything drawn to it since the last call to clear()
+        */
         void update()
         {
             sdl_context.RenderPresent(this.renderer);
         }
 
+        /**
+          Clear the screen with white.
+        */
         void clear()
         {
             sdl_context.SetRenderDrawColor(this.renderer, 0xFF, 0xFF, 0xFF, 0xFF);
             sdl_context.RenderClear(this.renderer);
         }
 
+        /**
+          Clear the screen with a given color
+          Params:
+              color col    The color struct with which to paint the whole screen.
+        */
         void clear(color col)
         {
             sdl_context.SetRenderDrawColor(this.renderer, col.r, col.g, col.b, col.a);
             sdl_context.RenderClear(this.renderer);
         }
 
-        @safe pure nothrow immutable(string) get_title()
+        /**
+          Returns: immutable copy of the window title
+        */
+        @safe nothrow immutable(string) get_title()
         {
             return this.title.dup();
         }
 
-        @safe pure nothrow screen_dimensions get_size()
+        /**
+            Returns: A new screen_dimensions struct with the dimensions of this window.
+        */
+        @safe nothrow screen_dimensions get_size()
         {
             screen_dimensions s;
             s.w = this.window_width;
@@ -83,17 +118,28 @@ class sdl_window
             return s;
         }
 
-        @safe pure nothrow SDL_Window* get_window()
+        /**
+            Returns: A raw SDL_Window pointer to this window
+        */
+        @safe nothrow SDL_Window* get_window()
         {
             return this.window;
         }
 
-        @safe pure nothrow SDL_Surface* get_surface()
+        /** 
+            Returns: A raw SDL_Surface pointer to the surface assotiated with
+            this window.
+        */
+        @safe nothrow SDL_Surface* get_surface()
         {
             return this.surface;
         }
 
-        @safe pure nothrow SDL_Renderer* get_renderer()
+        /** 
+            Returns: A raw SDL_Renderer pointer to the renderer assotiated 
+            with this window.
+        */
+        @safe nothrow SDL_Renderer* get_renderer()
         {
             return this.renderer;
         }
@@ -102,9 +148,13 @@ class sdl_window
 
     private
     {
-        /* \brief Actualy create a window.
-         *
-         * Throws SDLException on error */
+        /**
+            Creates a new SDL window.
+
+            This might be nicer in a functional form instead of modifying instance variables.
+
+            Throws: SDLException on error
+        */
         void create_window(SDL_WindowFlags flags)
         {
 
@@ -118,6 +168,11 @@ class sdl_window
 
         }
 
+        /**
+            Creates a new renderer for this window
+
+            This might be nicer in a functional form instead of modifying instance variables.
+        */
         void create_renderer(SDL_RendererFlags flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
         {
             this.renderer = sdl_context.CreateRenderer(this.window, -1, flags);

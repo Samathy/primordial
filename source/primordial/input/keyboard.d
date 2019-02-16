@@ -2,12 +2,15 @@ module primordial.input.keyboard;
 
 import std.concurrency;
 import core.time : msecs;
+import std.stdio;
 
 import derelict.sdl2.sdl;
 
 import primordial.sdl.display;
 
-///Launch a new thread and listen for keypresses
+/**
+  Listens for keypresses and reports them when asked.
+*/
 class sdl_event_listener
 {
     this(sdl_window window)
@@ -22,6 +25,10 @@ class sdl_event_listener
         sendShutdown();
     }
 
+    /**
+        If there has been a key pressed since the last call, return it.
+        Returns: SDL_Keycode    The key pressed.
+    */
     SDL_Keycode getLastKey()
     {
         receiveTimeout(msecs(0), (SDL_Keycode keycode) {
@@ -39,19 +46,24 @@ class sdl_event_listener
         }
     }
 
+    /**
+       Clear the recent events.
+       MUST be called straight after successfully getting a keypress, or before calling it next time.
+    */
     public void clearEvents()
     {
         this.last = 0;
         this.newEvent = false;
     }
 
-    ///Starts a task to listen for key presses
+    /**
+        Starts a task to listen for key presses
+    */
     void listen()
     {
         this.listenerTid = spawn(&this.keysymlistener, thisTid);
     }
 
-    ///Calls given function when key is pressed
     void callback_on(SDL_Keycode key, void function() f)
     {
         //TODO
@@ -62,6 +74,9 @@ class sdl_event_listener
         */
     }
 
+    /**
+        Tell our keypress listener to shutdown.
+    */
     void sendShutdown()
     {
         send(this.listenerTid, true);

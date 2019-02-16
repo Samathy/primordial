@@ -2,6 +2,9 @@ module primordial.models.component;
 
 import primordial.primitives.shapes;
 
+/**
+    Contains a component of a model.
+*/
 class model_component
 {
     this(renderable_abstract_object renderable, void function(int, int,
@@ -11,16 +14,25 @@ class model_component
         this.update = update_x_y;
     }
 
+    /**
+        Render the encapsulated renderable object
+    */
     void render()
     {
         this.renderable.render();
     }
-
+    
+    /**
+        Update the encapsulated renderable object's position.
+    */
     void updatePosition(int x, int y)
     {
         this.update(x, y, this.renderable);
     }
 
+    /** 
+       Returns: The encapsulated renderable object (note: Does not return copy, but the actual object)
+    */
     renderable_abstract_object get_renderable()
     {
         return this.renderable;

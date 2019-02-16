@@ -12,7 +12,17 @@ public bool ttf = false;
 
 public bool initialised = false;
 
-void load_libs(bool use_sdl=true, bool use_ttf=true)
+/**
+  Loads the SDL2 libraries using Derelict.
+
+  Throws: SDLException on load failure.
+
+
+  Params:
+      bool use_sdl = true    Load the SDL Libs?
+      bool use_ttf = true    Load the SDL TTF libs? 
+*/
+void load_libs(bool use_sdl = true, bool use_ttf = true)
 {
     if(use_sdl)
     {
@@ -41,6 +51,12 @@ void load_libs(bool use_sdl=true, bool use_ttf=true)
     ttf = use_ttf;
 }
 
+/**
+  Initialises the loded libraries.
+
+  Throws: SDLException if SDL fails to initialise
+*/
+
 void init_sdl()
 {
     if(sdl)
@@ -59,6 +75,9 @@ void init_sdl()
     initialised = true;
 }
 
+/**
+    An exception thrown whenever SDL functions return errors.
+*/
 class SDLException : Exception
 {
     this(string msg, string sdl_error, string file = __FILE__, size_t line = __LINE__)
@@ -67,6 +86,10 @@ class SDLException : Exception
         super(msg, file, line);
     }
 
+    /** 
+      Commonly stores the output of SDL's GetError function.
+      Returns: An SDL Error string.
+    */
     string GetError()
     {
         return this.sdl_error;
@@ -78,6 +101,11 @@ class SDLException : Exception
     }
 }
 
+/**
+  Contains all SDL functions used in Primordial, wrapped
+  in similarly named methods. 
+  Interested parties should look up documentation for SDL counterpart methods.
+*/
 class SDL
 {
     public
@@ -92,6 +120,9 @@ class SDL
             SDL_Quit();
         }
 
+        /**
+            Throws: SDLException
+        */
         SDL_Window* CreateWindow(immutable(char)* title, int x, int y, int w,
                 int h, SDL_WindowFlags flags)
         {
@@ -106,6 +137,9 @@ class SDL
             return win;
         }
 
+        /**
+            Throws: SDLException
+        */
         SDL_Renderer* CreateRenderer(SDL_Window* window, int index, SDL_RendererFlags flags)
         {
             SDL_Renderer* ren = null;
@@ -118,6 +152,9 @@ class SDL
             return ren;
         }
 
+        /**
+            Throws: SDLException
+        */
         SDL_Texture* CreateTextureFromSurface(SDL_Renderer* ren, SDL_Surface* surface)
         {
             SDL_Texture* new_texture = null;
@@ -155,6 +192,9 @@ class SDL
             return SDL_RenderFillRect(ren, rect);
         }
 
+        /**
+            Throws: SDLException
+        */
         SDL_Surface* GetWindowSurface(SDL_Window* win)
         {
             SDL_Surface* sur = null;
@@ -221,6 +261,11 @@ class SDL
     }
 }
 
+/**
+  Contains all SDL TTF functions used in Primordial, wrapped
+  in similarly named methods. 
+  Interested parties should look up documentation for SDL counterpart methods.
+*/
 class TTF
 {
 
@@ -235,6 +280,9 @@ class TTF
             TTF_Quit();
         }
 
+        /**
+            Throws: SDLException
+        */
         SDL_Surface* RenderText_Solid(TTF_Font* font, immutable(char)* text, SDL_Color color)
         {
             SDL_Surface* new_surface = null;
@@ -247,6 +295,9 @@ class TTF
             return new_surface;
         }
 
+        /**
+            Throws: SDLException
+        */
         SDL_Surface* RenderText_Blended(TTF_Font* font, immutable(char)* text, SDL_Color color)
         {
             SDL_Surface* new_surface = null;
@@ -258,6 +309,9 @@ class TTF
             return new_surface;
         }
 
+        /**
+            Throws: SDLException
+        */
         TTF_Font* OpenFont(immutable(char)* file, int size)
         {
             TTF_Font* font;

@@ -4,12 +4,14 @@ import primordial.primitives.shapes;
 import primordial.models.component;
 import primordial.sdl.display;
 
-/**Model  containers contain a bunch of renderable objects.
-  Each object should have it's x and y set to 0, and give the model container a function to change it's x & y in relation to the model's x & y.
-  When the render() method of the model is called, the update x&y method is called on each component
-  */
-
-///Contains all the renderable objects that make up a model
+/**
+  Model containers contain a bunch of renderable objects ( which themselves are
+  inside a model component).  Each object should have it's x and y set to 0,
+  and give the model container a function to change it's x & y in relation to
+  the model's x & y.  When the render() method of the model is called, the
+  update x&y method is called on each component. Thus updating the position of
+  each encapsulated component.
+*/
 class model_container
 {
 
@@ -21,12 +23,18 @@ class model_container
         this.z = z;
     }
 
+    /**
+        Add a new component to the model.
+    */
     public void addComponent(model_component renderable_component)
     {
         this.components ~= renderable_component;
     }
 
-    //Get rid of part of the model
+    /**
+      UNIMPLEMENTED
+      Remove a component of the model.
+    */
     public void removeComponent()
     {
 
@@ -161,7 +169,9 @@ version (interactive)
     }
 }
 
-///Like the normal model container, except all renderables are named.
+/**
+  Like the normal model container, except all renderables are named.
+*/
 class keyword_model_container : model_container
 {
 
@@ -170,7 +180,9 @@ class keyword_model_container : model_container
         super(name, x, y, z);
     }
 
-    ///Add a named renderable
+    /** 
+        Add a named renderable
+    */
     template addNamedComponent(renderable_type)
     {
         public void addNamedComponent(model_component!(renderable_type) renderable_component,

@@ -24,6 +24,9 @@ interface renderable_object
     }
 }
 
+/**
+  An abstract class representing an object which is renderable.
+*/
 class renderable_abstract_object : renderable_object
 {
     public
@@ -38,6 +41,11 @@ class renderable_abstract_object : renderable_object
             this.renderer = renderer;
         }
 
+        /**
+            Center the object to the screen.
+            Params:
+                screen_dimensions s
+        */
         @safe pure nothrow void centered(screen_dimensions s)
         {
             int new_x;
@@ -52,6 +60,13 @@ class renderable_abstract_object : renderable_object
             return;
         }
 
+        /** 
+          Offset the object by a value in relation to the given alignment.
+
+          Params:
+              int offset    The offset value
+              char alignment    (l, r, t, b) The axis on which to offset the object.
+        */
         @safe pure nothrow void offset(int offset, char alignment)
         {
             if (alignment == 'l')
@@ -73,26 +88,45 @@ class renderable_abstract_object : renderable_object
             }
         }
 
+        /**
+          Set the object's x value
+          Params: int x
+        */
         void setx(int x)
         {
             this.x = x;
         }
 
+        /**
+          Set the object's y value
+          Params: int y
+        */
         void sety(int y)
         {
             this.y = y;
         }
 
+        /**
+          Get the object's x value
+          Params: int x
+        */
         int getx()
         {
             return this.x;
         }
 
+        /**
+          Get the object's y value
+          Params: int y
+        */
         int gety()
         {
             return this.y;
         }
 
+        /**
+          An overrideable method. Should render the object to the object's SDL_Renderer.
+        */
         void render()
         {
         }
@@ -144,6 +178,9 @@ unittest
 
 }
 
+/**
+  Represents a filled rectangle shape.
+*/
 class rectangle : renderable_abstract_object
 {
     public
@@ -173,12 +210,18 @@ class rectangle : renderable_abstract_object
             }
         }
 
+        /** 
+            Returns: The SDL_Rect encapsulated by this class.
+        */
         @safe nothrow SDL_Rect get_rect()
         {
             update_rect();
             return this.rect;
         }
 
+        /**
+            Returns: The width of the rectangle.
+        */
         @safe nothrow immutable(int) get_width()
         {
             update_rect();
@@ -209,6 +252,9 @@ class rectangle : renderable_abstract_object
 
         }
 
+        /**
+          Update the encapsulated SDL_Rect with the right data.
+        */
         @safe nothrow void update_rect()
         {
             this.rect.x = this.x;
@@ -257,6 +303,9 @@ unittest
     rect.render();
 }
 
+/** 
+  Represents a line rectangle
+*/
 class line_rectangle : rectangle
 {
 
@@ -287,6 +336,9 @@ class line_rectangle : rectangle
     }
 }
 
+/**
+  Represents a single line
+*/
 class line : renderable_abstract_object
 {
 
@@ -375,6 +427,10 @@ unittest
     assert(l.y2 == 20);
 }
 
+/** 
+  Represents a filled circle.
+  TODO Should rename either this or the filled rectangle to be consistent.
+*/
 class solid_circle : renderable_abstract_object
 {
     public
@@ -388,6 +444,11 @@ class solid_circle : renderable_abstract_object
 
         }
 
+        /**
+            Renders the circle.
+            This is probably quite slow since it renders many, many points one by one.
+            Maybe this could be parrallelised?
+        */
         override void render()
         {
 
@@ -414,10 +475,15 @@ class solid_circle : renderable_abstract_object
     private
     {
         int radius;
+        int old_x;
+        int old_y;
     }
 
 }
 
+/**
+  Represents a line circle.
+*/
 class line_circle : renderable_abstract_object
 {
     public
@@ -480,6 +546,9 @@ class line_circle : renderable_abstract_object
 
 }
 
+/**
+  Represents a line triangle.
+*/
 class line_triangle : renderable_abstract_object
 {
 
@@ -568,6 +637,9 @@ unittest
 
 }
 
+/**
+  Represents a renderable text object.
+*/
 class text : renderable_abstract_object
 {
     public
@@ -595,6 +667,12 @@ class text : renderable_abstract_object
             sdl_context.DestroyTexture(this.texture);
         }
 
+        /**
+          Loads text into a renderable object.
+          This is called in the constructor, but can also be called any time.
+
+          Currently this uses blended mode text.
+         */
         void load_rendered_text(string text, color text_color = black)
         {
             this.text_surface = ttf_context.RenderText_Blended(this.font,
@@ -629,12 +707,18 @@ class text : renderable_abstract_object
         {
             return immutable(int)(this.y);
         }
-
+        
+        /**
+            Returns: immutable(int)    The width of the rendered text.
+        */
         @safe pure nothrow immutable(int) get_width()
         {
             return immutable(int)(this.width);
         }
 
+        /**
+            Returns: immutable(int)    The height of the rendered text.
+        */
         @safe pure nothrow immutable(int) get_height()
         {
             return immutable(int)(this.height);
@@ -688,6 +772,11 @@ unittest
 
 }
 
+/**
+  Represents a key-like object with labled, colorcoded key items
+  drawn in whatever order they're added in.
+*/
+
 class key
 {
 
@@ -724,6 +813,9 @@ class key
             }
         }
 
+        /**
+          Add a color coded item to the key.
+        */
         void add(color col, string label)
         {
 
@@ -736,6 +828,10 @@ class key
                     label, cast(rectangle) null, cast(text) null, false);
         }
 
+        /**
+            UNIMPLEMENTED
+            Remove an item from the key.
+        */
         void remove(string label)
         {
         }
@@ -795,6 +891,10 @@ class key
 
     private
     {
+        /**
+            Search added lables for a given text string
+            TODO this could probably be much better.
+        */
         int search_for_label(string label)
         {
             int similar_labels;
@@ -892,16 +992,25 @@ class key
 
         }
 
+        /**
+            Generate a rectangle for the given key item.
+        */
         rectangle create_rectangle(color col)
         {
             return new rectangle(this.dimensions.w, 0, 50, this.font_size, col, this.renderer);
         }
 
+        /**
+            Generate a text object for a given key item.
+        */
         text create_text(string label)
         {
             return new text(label, dimensions.w, 0, black, this.font_size, this.renderer);
         }
 
+        /**
+            Returns: The length of the longest label
+        */
         int find_longest_label()
         {
             int longest_label;
@@ -917,6 +1026,9 @@ class key
             return longest_label;
         }
 
+        /**
+            Returns: int    the height of the tallest label.
+        */
         int find_tallest_label()
         {
             int tallest_label;
@@ -945,6 +1057,9 @@ class key
     }
 }
 
+/**
+    Represents a horizontal scale with ticks.
+*/
 class scale
 {
     public
@@ -1028,7 +1143,9 @@ class scale
     }
     private
     {
-
+        /**
+            Creates ticks on a scale
+        */
         void create_tics(int tic_distance, int multiplier, bool tic_labels)
         {
             for (int i = this.x; i < this.length; i += tic_distance * multiplier)

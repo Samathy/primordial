@@ -13,6 +13,9 @@ static immutable color black = {0, 0, 0, 255};
 static immutable color white = {255, 255, 255, 255};
 
 
+/**
+  Generate random colours.
+*/
 static color get_random_color()
 {
     auto rnd = new Random(unpredictableSeed);

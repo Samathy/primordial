@@ -14,6 +14,9 @@ enum MOUSE
     BUTTONUP
 }
 
+/**
+    Listen for mouse inputs and report them when asked.
+*/
 class sdl_mouse_listener
 {
     this(sdl_window window)
@@ -28,6 +31,9 @@ class sdl_mouse_listener
         sendShutdown();
     }
 
+    /**
+        Returns: int[2]    The mouse location.
+    */
     int[2] getMouseLocation()
     {
         int[2] locations;
