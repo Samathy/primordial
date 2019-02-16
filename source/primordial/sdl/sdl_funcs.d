@@ -19,8 +19,8 @@ public bool initialised = false;
 
 
   Params:
-      bool use_sdl = true    Load the SDL Libs?
-      bool use_ttf = true    Load the SDL TTF libs? 
+      use_sdl = true    Load the SDL Libs?
+      use_ttf = true    Load the SDL TTF libs? 
 */
 void load_libs(bool use_sdl = true, bool use_ttf = true)
 {

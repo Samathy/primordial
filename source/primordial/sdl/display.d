@@ -91,7 +91,7 @@ class sdl_window
         /**
           Clear the screen with a given color
           Params:
-              color col    The color struct with which to paint the whole screen.
+              col =     The color struct with which to paint the whole screen.
         */
         void clear(color col)
         {

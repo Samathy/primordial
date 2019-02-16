@@ -28,9 +28,8 @@ version (unittest)
   Initialise SDL libraries
 
 Params:
-    bool sdl = true    Load SDL2 libs
-    bool ttf = true    Load the SDL ttf libraries
-                       for text rendering.
+    sdl = true    Load SDL2 libs
+    ttf = true    Load the SDL ttf libraries for text rendering.
 */
 void primordial_init(bool sdl = true, bool ttf = true)
 {

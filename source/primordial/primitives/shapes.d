@@ -44,7 +44,7 @@ class renderable_abstract_object : renderable_object
         /**
             Center the object to the screen.
             Params:
-                screen_dimensions s
+                s =    The dimensions of the screen by which to center
         */
         @safe pure nothrow void centered(screen_dimensions s)
         {
@@ -64,8 +64,8 @@ class renderable_abstract_object : renderable_object
           Offset the object by a value in relation to the given alignment.
 
           Params:
-              int offset    The offset value
-              char alignment    (l, r, t, b) The axis on which to offset the object.
+              offset =     The offset value
+              alignment =     (l, r, t, b) The axis on which to offset the object.
         */
         @safe pure nothrow void offset(int offset, char alignment)
         {
@@ -90,7 +90,7 @@ class renderable_abstract_object : renderable_object
 
         /**
           Set the object's x value
-          Params: int x
+          Params: x = 
         */
         void setx(int x)
         {
@@ -99,7 +99,7 @@ class renderable_abstract_object : renderable_object
 
         /**
           Set the object's y value
-          Params: int y
+          Params: y = 
         */
         void sety(int y)
         {
@@ -108,7 +108,6 @@ class renderable_abstract_object : renderable_object
 
         /**
           Get the object's x value
-          Params: int x
         */
         int getx()
         {
@@ -117,7 +116,6 @@ class renderable_abstract_object : renderable_object
 
         /**
           Get the object's y value
-          Params: int y
         */
         int gety()
         {
