@@ -656,7 +656,8 @@ class text : renderable_abstract_object
             this.flip = flip;
             this.font_size = fontsize;
 
-            this.font = ttf_context.OpenFont("/usr/share/fonts/TTF/FreeMonoBold.ttf", this.font_size);
+            this.font = ttf_context.OpenFont("/usr/share/fonts/TTF/FreeMonoBold.ttf",
+                    this.font_size);
 
             load_rendered_text(text_content, this.col);
         }
@@ -707,7 +708,7 @@ class text : renderable_abstract_object
         {
             return immutable(int)(this.y);
         }
-        
+
         /**
             Returns: immutable(int)    The width of the rendered text.
         */

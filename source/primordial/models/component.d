@@ -21,7 +21,7 @@ class model_component
     {
         this.renderable.render();
     }
-    
+
     /**
         Update the encapsulated renderable object's position.
     */

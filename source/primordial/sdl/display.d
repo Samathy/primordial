@@ -173,7 +173,8 @@ class sdl_window
 
             This might be nicer in a functional form instead of modifying instance variables.
         */
-        void create_renderer(SDL_RendererFlags flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
+        void create_renderer(
+                SDL_RendererFlags flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC)
         {
             this.renderer = sdl_context.CreateRenderer(this.window, -1, flags);
         }

@@ -1,8 +1,8 @@
 module primordial.colors;
 
-import derelict.sdl2.sdl: SDL_Color;
+import derelict.sdl2.sdl : SDL_Color;
 
-import std.random: Random, uniform, unpredictableSeed;
+import std.random : Random, uniform, unpredictableSeed;
 
 alias color = SDL_Color;
 
@@ -11,7 +11,6 @@ static immutable color green = {0, 255, 0, 255};
 static immutable color blue = {0, 0, 255, 255};
 static immutable color black = {0, 0, 0, 255};
 static immutable color white = {255, 255, 255, 255};
-
 
 /**
   Generate random colours.

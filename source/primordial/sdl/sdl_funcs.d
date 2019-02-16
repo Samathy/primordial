@@ -24,7 +24,7 @@ public bool initialised = false;
 */
 void load_libs(bool use_sdl = true, bool use_ttf = true)
 {
-    if(use_sdl)
+    if (use_sdl)
     {
         try
         {
@@ -35,7 +35,7 @@ void load_libs(bool use_sdl = true, bool use_ttf = true)
             throw new Error(e.msg);
         }
     }
-    if(use_ttf)
+    if (use_ttf)
     {
         try
         {
@@ -46,7 +46,7 @@ void load_libs(bool use_sdl = true, bool use_ttf = true)
             throw new SDLException("Could not load SDL TTF Library", "");
         }
     }
-    
+
     sdl = use_sdl;
     ttf = use_ttf;
 }
@@ -59,7 +59,7 @@ void load_libs(bool use_sdl = true, bool use_ttf = true)
 
 void init_sdl()
 {
-    if(sdl)
+    if (sdl)
     {
         if (SDL_Init(SDL_INIT_VIDEO) > 0)
         {
@@ -67,7 +67,7 @@ void init_sdl()
         }
     }
 
-    if(ttf)
+    if (ttf)
     {
         TTF_Init();
     }
